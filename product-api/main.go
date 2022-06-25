@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/ParthAhuja143/GoWithMicroServices/handlers"
@@ -16,15 +17,11 @@ func main() {
 	logger := log.New(os.Stdout, "products-api ", log.LstdFlags)
 
 	// create the handlers
-	handleHello := handlers.NewHello(logger)
-	handleGoodbye := handlers.NewGoodbye(logger)
 	productsHandler := handlers.NewProducts(logger)
 
 	// create a new serve mux and register the handlers
 	serveMux := http.NewServeMux()
-	serveMux.Handle("/", handleHello)
-	serveMux.Handle("/goodbye", handleGoodbye)
-	serveMux.Handle("/products", productsHandler)
+	serveMux.Handle("/products/", productsHandler)
 
 	server := http.Server{
 		Addr: ":9090",
@@ -36,6 +33,7 @@ func main() {
 
 	// It's in a go routine so that it doesn't stop execution of code below it
 	go func(){
+		logger.Println("Server running on port 9090")
 		err := server.ListenAndServe()
 
 		if err != nil {
@@ -44,15 +42,17 @@ func main() {
 	}()
 
 	// We make a channel to communicate and we only listen for Interrupt or Kill
-	signalChannel := make(chan os.Signal)
+	signalChannel := make(chan os.Signal, 1)
 	signal.Notify(signalChannel, os.Interrupt)
-	signal.Notify(signalChannel, os.Kill)
+	signal.Notify(signalChannel, syscall.SIGTERM)
 
 	// This execution is blocked until we get a message(which is Kill or Interrupt) and then graceful shutdown begins
 	signal := <-signalChannel
 	logger.Println("Received terminate, graceful shutdown", signal)
 
-	serverTimeoutContext, _ := context.WithTimeout(context.Background(), 30*time.Second)
+	serverTimeoutContext, cancelContextFunc := context.WithTimeout(context.Background(), 30*time.Second)
 	
+	defer cancelContextFunc()
+
 	server.Shutdown(serverTimeoutContext)
 }
