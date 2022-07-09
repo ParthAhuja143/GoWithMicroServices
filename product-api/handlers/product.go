@@ -1,147 +1,66 @@
+// Package classification of Product API
+//
+// Documentation for Product API
+//
+// Schemes: http
+// BasePath: /products
+// Version: 1.0.0
+//
+// Consumes:
+// - application/json
+//
+// Produces:
+// - application/json
+// swagger:meta
+
 package handlers
 
 import (
 	"log"
-	"net/http"
-	"regexp"
-	"strconv"
 
 	"github.com/ParthAhuja143/GoWithMicroServices/data"
-	"github.com/ParthAhuja143/GoWithMicroServices/errors"
 )
 
+// A list of products returned in response
+// swagger:response productsResponse
+type productsResponseWrapper struct{
+	// All products in the system
+	// in:body
+	Body []data.Product
+}
+
+// swagger:paramters deleteProduct
+type productIDParameterWrapper struct {
+	// The id of the product to delete from the database
+	// in: path
+	// required: true
+	ID int `json:id`
+}
+
+// Products is a http.Handler
 type Products struct {
 	l *log.Logger
 }
 
+// NewProducts create a new httpHandler with given logger
 func NewProducts(l* log.Logger) *Products {
 	return &Products{l}
 }
 
-func (p *Products) ServeHTTP(rw http.ResponseWriter, r *http.Request){
+/*func (p *Products) ServeHTTP(rw http.ResponseWriter, r *http.Request){
 	switch r.Method {
 		case http.MethodGet:
-			p.getProducts(rw, r)
+			p.GetProducts(rw, r)
 
 		case http.MethodPost:
-			p.addProduct(rw, r)
+			p.AddProduct(rw, r)
 
 		case http.MethodPut:
-			p.updateProduct(rw, r)	
+			p.UpdateProduct(rw, r)	
 
 		case http.MethodDelete:
-			p.deleteProduct(rw, r)
+			p.DeleteProduct(rw, r)
 		default:
 			rw.WriteHeader(http.StatusMethodNotAllowed)
 	}
-}
-
-func (p* Products) getProducts(rw http.ResponseWriter, h *http.Request){
-	p.l.Println("Handle GET Products")
-
-	productList := data.GetProducts()
-
-	err := productList.ToJSON(rw)
-
-	if err != nil {
-		http.Error(rw, "Unable to marshal json", http.StatusInternalServerError)
-	}
-}
-
-func (p* Products) addProduct(rw http.ResponseWriter, r *http.Request){
-	p.l.Println("Handle POST Products")
-
-	product := &data.Product{}
-
-	err := product.FromJSON(r.Body)
-	if err != nil {
-		http.Error(rw, errors.ErrUnmarshal.Error(), http.StatusBadRequest)
-	}
-
-	newProductList := data.AddProduct(product)
-
-	newProductList.ToJSON(rw)
-
-	rw.WriteHeader(http.StatusOK)
-}
-
-func (p *Products) updateProduct(rw http.ResponseWriter, r *http.Request){
-	p.l.Println("Handle PUT Products")
-
-	id, err := getIDFromURI(rw, r)
-
-	if err != nil  {
-		if err == errors.ErrInvalidURI {
-			http.Error(rw, errors.ErrInvalidURI.Error() , http.StatusBadRequest)
-		}
-
-		if id == -1 {
-			http.Error(rw, errors.ErrProductNotFound.Error(), http.StatusBadRequest)
-		}
-
-		return
-	}
-	
-	product := &data.Product{}
-
-	err = product.FromJSON(r.Body)
-	if err != nil {
-		http.Error(rw, errors.ErrUnmarshal.Error(), http.StatusBadRequest)
-		return
-	}
-
-	err = data.UpdateProduct(id, product)
-
-	if err != nil {
-		http.Error(rw, errors.ErrProductNotFound.Error(), http.StatusBadRequest)
-		return
-	}
-
-	rw.WriteHeader(http.StatusOK)
-}
-
-func (p *Products) deleteProduct(rw http.ResponseWriter, r *http.Request){
-	p.l.Println("Handle DELETE Products")
-
-	id, err := getIDFromURI(rw, r)
-
-	if err != nil {
-		if err == errors.ErrInvalidURI {
-			http.Error(rw, errors.ErrInvalidURI.Error() , http.StatusBadRequest)
-		}
-
-		if id == -1 {
-			http.Error(rw, errors.ErrProductNotFound.Error(), http.StatusBadRequest)
-		}
-
-		return
-	}
-
-	err = data.DeleteProduct(id)
-
-	if err != nil {
-		http.Error(rw, errors.ErrProductNotFound.Error(), http.StatusBadRequest)
-		return
-	}
-
-	rw.WriteHeader(http.StatusOK)
-}
-
-func getIDFromURI(rw http.ResponseWriter, r *http.Request) (int, error){
-	regex := regexp.MustCompile(`/([0-9]+)`)
-	path := r.URL.Path
-
-	uidArr := regex.FindAllStringSubmatch(path, -1)
-	if len(uidArr) != 1 {
-		return -1, errors.ErrInvalidURI
-	}
-
-	uid := uidArr[0][1]
-	id, err := strconv.Atoi(uid)
-
-	if err != nil {
-		return -1, errors.ErrInvalidURI
-	}
-
-	return id, nil
-}
+}*/
