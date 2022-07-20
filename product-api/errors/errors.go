@@ -4,6 +4,12 @@ import "net/http"
 
 type HTTPError int
 
+type Error struct {
+	Message string `json:"message"`
+	Description string `json:"description"`
+	StatusCode int `json:"int"`
+}
+
 const (
 	NoErr HTTPError = -1
 	ErrProductNotFound HTTPError = 0	
@@ -14,7 +20,17 @@ const (
 	ErrMarshal HTTPError = 5
 )
 
-func (e HTTPError) Title() string {
+func Err(e HTTPError) Error {
+	response := Error{
+		Message: e.title(),
+		Description: e.description(),
+		StatusCode: e.statusCode(),
+	}
+
+	return response
+}
+
+func (e HTTPError) title() string {
 	switch e {
 	case ErrProductNotFound:
 		return "Product Not Found"
@@ -33,7 +49,7 @@ func (e HTTPError) Title() string {
 	}
 }
 
-func (e HTTPError) Description() string {
+func (e HTTPError) description() string {
 	switch e {
 	case ErrProductNotFound:
 		return "Product Not Found"
@@ -52,7 +68,7 @@ func (e HTTPError) Description() string {
 	}
 }
 
-func (e HTTPError) StatusCode() int {
+func (e HTTPError) statusCode() int {
 	switch e {
 	case ErrInvalidURI,
 		ErrUnmarshal,

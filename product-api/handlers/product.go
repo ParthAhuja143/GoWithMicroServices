@@ -34,7 +34,7 @@ type productIDParameterWrapper struct {
 	// The id of the product to delete from the database
 	// in: path
 	// required: true
-	ID int `json:id`
+	ID int `json:"id"`
 }
 
 // Products is a http.Handler
