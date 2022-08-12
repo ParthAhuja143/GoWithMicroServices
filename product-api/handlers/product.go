@@ -23,13 +23,13 @@ import (
 
 // A list of products returned in response
 // swagger:response productsResponse
-type productsResponseWrapper struct{
+type productsResponseWrapper struct {
 	// All products in the system
 	// in:body
 	Body []data.Product
 }
 
-// swagger:paramters deleteProduct
+// swagger:parameters deleteProduct
 type productIDParameterWrapper struct {
 	// The id of the product to delete from the database
 	// in: path
@@ -43,7 +43,7 @@ type Products struct {
 }
 
 // NewProducts create a new httpHandler with given logger
-func NewProducts(l* log.Logger) *Products {
+func NewProducts(l *log.Logger) *Products {
 	return &Products{l}
 }
 
@@ -56,7 +56,7 @@ func NewProducts(l* log.Logger) *Products {
 			p.AddProduct(rw, r)
 
 		case http.MethodPut:
-			p.UpdateProduct(rw, r)	
+			p.UpdateProduct(rw, r)
 
 		case http.MethodDelete:
 			p.DeleteProduct(rw, r)

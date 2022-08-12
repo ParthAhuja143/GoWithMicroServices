@@ -1,0 +1,9 @@
+# Source: go-swagger
+# Site: https://goswagger.io
+# Repository: go-swagger / go-swagger packages
+# Description: A certifiably-awesome open-source package repository curated by go-swagger, hosted by Cloudsmith.
+
+
+deb [signed-by=/usr/share/keyrings/go-swagger-go-swagger-archive-keyring.gpg] https://dl.cloudsmith.io/public/go-swagger/go-swagger/deb/debian any-version main
+
+deb-src [signed-by=/usr/share/keyrings/go-swagger-go-swagger-archive-keyring.gpg] https://dl.cloudsmith.io/public/go-swagger/go-swagger/deb/debian any-version main

@@ -22,15 +22,15 @@ const (
 
 func Err(e HTTPError) Error {
 	response := Error{
-		Message: e.title(),
-		Description: e.description(),
-		StatusCode: e.statusCode(),
+		Message: e.Title(),
+		Description: e.Description(),
+		StatusCode: e.StatusCode(),
 	}
 
 	return response
 }
 
-func (e HTTPError) title() string {
+func (e HTTPError) Title() string {
 	switch e {
 	case ErrProductNotFound:
 		return "Product Not Found"
@@ -49,7 +49,7 @@ func (e HTTPError) title() string {
 	}
 }
 
-func (e HTTPError) description() string {
+func (e HTTPError) Description() string {
 	switch e {
 	case ErrProductNotFound:
 		return "Product Not Found"
@@ -68,7 +68,7 @@ func (e HTTPError) description() string {
 	}
 }
 
-func (e HTTPError) statusCode() int {
+func (e HTTPError) StatusCode() int {
 	switch e {
 	case ErrInvalidURI,
 		ErrUnmarshal,
