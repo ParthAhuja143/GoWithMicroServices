@@ -19,7 +19,7 @@ definitions:
         type: string
         x-go-name: SKU
     type: object
-    x-go-package: github.com/ParthAhuja143/GoWithMicroServices/data
+    x-go-package: github.com/ParthAhuja143/GoWithMicroServices/product-api/data
 info: 
   version: "1.0.0"
   title: "API Specs"
