@@ -5,3 +5,6 @@ install_swagger:
 	
 swagger: 
 	swagger generate spec -o ./swagger.yaml --scan-models
+
+start:
+	go run main.go

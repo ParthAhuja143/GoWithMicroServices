@@ -20,7 +20,9 @@ definitions:
         x-go-name: SKU
     type: object
     x-go-package: github.com/ParthAhuja143/GoWithMicroServices/data
-info: {}
+info: 
+  version: "1.0.0"
+  title: "API Specs"
 paths:
   /products:
     get:
@@ -29,7 +31,44 @@ paths:
       responses:
         "200":
           $ref: '#/responses/productsResponse'
+    post:
+      description: Adds a product to the list
+      operationId: addProduct
+      responses:
+        "200":
+          $ref: '#/responses/noResponse'
+  /products/{id}:
+    delete:
+      description: Deletes a product in the list
+      operationId: deleteProduct
+      parameters:
+      - description: The id of the product to delete from the database
+        format: int64
+        in: path
+        name: id
+        required: true
+        type: integer
+        x-go-name: ID
+      responses:
+        "200":
+          $ref: '#/responses/noResponse'
+    put:
+      description: Updates a product in the list
+      operationId: updateProduct
+      parameters:
+      - description: The id of the product to delete from the database
+        format: int64
+        in: path
+        name: id
+        required: true
+        type: integer
+        x-go-name: ID
+      responses:
+        "200":
+          $ref: '#/responses/noResponse'
 responses:
+  noResponse:
+    description: ""
   productsResponse:
     description: A list of products returned in response
     schema:

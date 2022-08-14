@@ -7,6 +7,13 @@ import (
 	"github.com/ParthAhuja143/GoWithMicroServices/errors"
 )
 
+//swagger:route POST /products addProduct
+//Adds a product to the list
+//responses:
+//200: noResponse
+
+//AddProducts returns the products from the data store
+
 func (p *Products) AddProduct(rw http.ResponseWriter, r *http.Request) {
 	p.l.Println("Handle POST Products")
 

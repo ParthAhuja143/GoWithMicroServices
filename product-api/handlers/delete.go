@@ -8,6 +8,12 @@ import (
 	"github.com/ParthAhuja143/GoWithMicroServices/utils"
 )
 
+//swagger:route DELETE /products/{id} deleteProduct
+//Deletes a product in the list
+//responses:
+//200: noResponse
+
+// DeleteProduct updates the product
 func (p *Products) DeleteProduct(rw http.ResponseWriter, r *http.Request) {
 	p.l.Println("Handle DELETE Products")
 

@@ -9,6 +9,12 @@ import (
 	"github.com/gorilla/mux"
 )
 
+//swagger:route PUT /products/{id} updateProduct
+//Updates a product in the list
+//responses:
+//200: noResponse
+
+// UpdateProduct updates the product
 func (p *Products) UpdateProduct(rw http.ResponseWriter, r *http.Request) {
 	p.l.Println("Handle PUT Products")
 

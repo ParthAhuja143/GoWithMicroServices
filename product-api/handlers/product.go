@@ -29,7 +29,11 @@ type productsResponseWrapper struct {
 	Body []data.Product
 }
 
-// swagger:parameters deleteProduct
+// swagger:response noResponse
+type noResponse struct {
+}
+
+// swagger:parameters deleteProduct updateProduct
 type productIDParameterWrapper struct {
 	// The id of the product to delete from the database
 	// in: path
