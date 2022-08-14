@@ -3,8 +3,8 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/ParthAhuja143/GoWithMicroServices/data"
-	"github.com/ParthAhuja143/GoWithMicroServices/errors"
+	"github.com/ParthAhuja143/GoWithMicroServices/product-api/data"
+	"github.com/ParthAhuja143/GoWithMicroServices/product-api/errors"
 )
 
 //swagger:route POST /products addProduct

@@ -9,8 +9,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/ParthAhuja143/GoWithMicroServices/handlers"
-	HTTPmiddleware "github.com/ParthAhuja143/GoWithMicroServices/middlewares"
+	"github.com/ParthAhuja143/GoWithMicroServices/product-api/handlers"
+	HTTPmiddleware "github.com/ParthAhuja143/GoWithMicroServices/product-api/middlewares"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/gorilla/mux"
 	"github.com/nicholasjackson/env"
@@ -29,8 +29,7 @@ func main() {
 	// create a new serve mux and register the handlers
 	//serveMux := http.NewServeMux()
 	serveMux := mux.NewRouter()
-	
-	
+
 	getRouter := serveMux.Methods(http.MethodGet).Subrouter()
 	getRouter.HandleFunc("/products", productsHandler.GetProducts)
 
@@ -44,25 +43,25 @@ func main() {
 
 	deleteRouter := serveMux.Methods(http.MethodDelete).Subrouter()
 	deleteRouter.HandleFunc("/products/{id:[0-9]+}", productsHandler.DeleteProduct)
-	
+
 	opts := middleware.RedocOpts{SpecURL: "/swagger.yaml"}
 	sh := middleware.Redoc(opts, nil)
 
 	getRouter.Handle("/docs", sh)
 	getRouter.Handle("/swagger.yaml", http.FileServer(http.Dir("./")))
-	
+
 	//serveMux.("/products/", productsHandler)
 
 	server := http.Server{
-		Addr: *bindAddress,
-		Handler: serveMux,
-		IdleTimeout: 120*time.Second,
-		ReadTimeout: 1*time.Second,
-		WriteTimeout: 1*time.Second,
+		Addr:         *bindAddress,
+		Handler:      serveMux,
+		IdleTimeout:  120 * time.Second,
+		ReadTimeout:  1 * time.Second,
+		WriteTimeout: 1 * time.Second,
 	}
 
 	// It's in a go routine so that it doesn't stop execution of code below it
-	go func(){
+	go func() {
 		logger.Println("Server running on port 9090")
 		err := server.ListenAndServe()
 

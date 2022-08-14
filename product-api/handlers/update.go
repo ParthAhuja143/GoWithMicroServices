@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/ParthAhuja143/GoWithMicroServices/data"
-	"github.com/ParthAhuja143/GoWithMicroServices/errors"
+	"github.com/ParthAhuja143/GoWithMicroServices/product-api/data"
+	"github.com/ParthAhuja143/GoWithMicroServices/product-api/errors"
 	"github.com/gorilla/mux"
 )
 

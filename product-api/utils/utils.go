@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/ParthAhuja143/GoWithMicroServices/errors"
+	"github.com/ParthAhuja143/GoWithMicroServices/product-api/errors"
 )
 
 func GetIDFromURI(rw http.ResponseWriter, r *http.Request) (int, errors.HTTPError) {
@@ -26,4 +26,3 @@ func GetIDFromURI(rw http.ResponseWriter, r *http.Request) (int, errors.HTTPErro
 
 	return id, errors.NoErr
 }
-

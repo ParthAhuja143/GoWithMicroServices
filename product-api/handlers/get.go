@@ -3,8 +3,8 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/ParthAhuja143/GoWithMicroServices/data"
-	"github.com/ParthAhuja143/GoWithMicroServices/errors"
+	"github.com/ParthAhuja143/GoWithMicroServices/product-api/data"
+	"github.com/ParthAhuja143/GoWithMicroServices/product-api/errors"
 )
 
 //swagger:route GET /products listProducts
@@ -12,7 +12,7 @@ import (
 //responses:
 //200: productsResponse
 
-//GetProducts returns the products from the data store
+// GetProducts returns the products from the data store
 func (p *Products) GetProducts(rw http.ResponseWriter, h *http.Request) {
 	p.l.Println("Handle GET Products")
 

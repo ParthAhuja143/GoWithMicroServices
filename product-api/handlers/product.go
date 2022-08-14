@@ -18,7 +18,7 @@ package handlers
 import (
 	"log"
 
-	"github.com/ParthAhuja143/GoWithMicroServices/data"
+	"github.com/ParthAhuja143/GoWithMicroServices/product-api/data"
 )
 
 // A list of products returned in response

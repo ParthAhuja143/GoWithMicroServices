@@ -6,15 +6,15 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/ParthAhuja143/GoWithMicroServices/errors"
+	"github.com/ParthAhuja143/GoWithMicroServices/product-api/errors"
 	"github.com/go-playground/validator"
 )
 
 type Product struct {
-	ID          int  	`json:"id"`
+	ID          int     `json:"id"`
 	Name        string  `json:"name" validate:"required"`
 	Description string  `json:"description"`
-	Price       float32	`json:"price" validate:"gt=0"`
+	Price       float32 `json:"price" validate:"gt=0"`
 	SKU         string  `json:"sku" validate:"required,sku"`
 	CreatedOn   string  `json:"-"`
 	UpdatedOn   string  `json:"-"`
@@ -44,10 +44,10 @@ var ProductList = []*Product{
 	},
 }
 
-//Used in middleware in request context, we can use strings as well but preffered method is to use types
-type RequestBodyProduct struct {}
+// Used in middleware in request context, we can use strings as well but preffered method is to use types
+type RequestBodyProduct struct{}
 
-func (p *Product) Validate() errors.HTTPError{
+func (p *Product) Validate() errors.HTTPError {
 	validate := validator.New()
 	// custom validation for sku
 	validate.RegisterValidation("sku", validateSKU)
@@ -62,7 +62,7 @@ func (p *Product) Validate() errors.HTTPError{
 
 }
 
-func validateSKU(fieldLevel validator.FieldLevel) bool{
+func validateSKU(fieldLevel validator.FieldLevel) bool {
 	regex := regexp.MustCompile(`[a-z]+-[a-z]+-[a-z]+`)
 	matches := regex.FindAllString(fieldLevel.Field().String(), -1)
 
@@ -73,17 +73,17 @@ func validateSKU(fieldLevel validator.FieldLevel) bool{
 	return true
 }
 
-func GetProducts() Products{
+func GetProducts() Products {
 	return ProductList
 }
 
-func AddProduct(p* Product) Products{
+func AddProduct(p *Product) Products {
 	p.ID = getNextID()
 	ProductList = append(ProductList, p)
 	return ProductList
 }
 
-func UpdateProduct(id int, p *Product) errors.HTTPError{
+func UpdateProduct(id int, p *Product) errors.HTTPError {
 	_, pos, err := findProductByID(id)
 
 	if err != errors.NoErr {
@@ -97,12 +97,12 @@ func UpdateProduct(id int, p *Product) errors.HTTPError{
 }
 
 func DeleteProduct(id int) errors.HTTPError {
-	 err := findProductByIDAndDelete(id)
+	err := findProductByIDAndDelete(id)
 
-	 return err
+	return err
 }
 
-func (p *Product) FromJSON(r io.Reader) errors.HTTPError{
+func (p *Product) FromJSON(r io.Reader) errors.HTTPError {
 	decoder := json.NewDecoder(r)
 	err := decoder.Decode(p)
 	if err == nil {
@@ -112,7 +112,7 @@ func (p *Product) FromJSON(r io.Reader) errors.HTTPError{
 	return errors.ErrUnmarshal
 }
 
-func (p *Products) ToJSON(w io.Writer) errors.HTTPError{
+func (p *Products) ToJSON(w io.Writer) errors.HTTPError {
 	encoder := json.NewEncoder(w)
 
 	err := encoder.Encode(p)
@@ -124,9 +124,9 @@ func (p *Products) ToJSON(w io.Writer) errors.HTTPError{
 	return errors.ErrMarshal
 }
 
-func getNextID() int{
+func getNextID() int {
 	lastProduct := ProductList[len(ProductList)-1]
-	return lastProduct.ID+1
+	return lastProduct.ID + 1
 }
 
 func findProductByID(id int) (*Product, int, errors.HTTPError) {
@@ -142,7 +142,7 @@ func findProductByID(id int) (*Product, int, errors.HTTPError) {
 
 func findProductByIDAndDelete(id int) errors.HTTPError {
 	newArr := make([]*Product, 0)
-	var IDFound bool = false;
+	var IDFound bool = false
 	for _, p := range ProductList {
 		if p.ID == id {
 			IDFound = true
